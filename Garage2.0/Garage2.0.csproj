@@ -137,6 +137,10 @@
     <Compile Include="Migrations\201702081439291_initial.Designer.cs">
       <DependentUpon>201702081439291_initial.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201702081600011_AddTimestamp.cs" />
+    <Compile Include="Migrations\201702081600011_AddTimestamp.Designer.cs">
+      <DependentUpon>201702081600011_AddTimestamp.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Vehicle.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -192,6 +196,9 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201702081439291_initial.resx">
       <DependentUpon>201702081439291_initial.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201702081600011_AddTimestamp.resx">
+      <DependentUpon>201702081600011_AddTimestamp.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

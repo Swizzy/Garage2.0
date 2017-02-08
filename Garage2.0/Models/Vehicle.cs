@@ -25,6 +25,9 @@ namespace Garage2._0.Models
         [Display(Name="Number of wheels")]
         [Required]
         public int NumberOfWheels { get; set; }
+        [DisplayFormat(DataFormatString = "yyyy-MM-dd HH:mm")]
+        [Required]
+        public DateTime Timestamp { get; set; }
 
     }
 }
