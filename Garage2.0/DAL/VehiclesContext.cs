@@ -9,7 +9,7 @@ namespace Garage2._0.DAL
     public class VehiclesContext : DbContext
     {
         public DbSet<Models.Vehicle> Vehicles { get; set; }
-        public VehiclesContext() : base("DefaultConnection") { }
+        public VehiclesContext() : base("Garage2.0") { }
 
     }
 }
