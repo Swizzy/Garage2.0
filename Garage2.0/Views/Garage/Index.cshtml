@@ -1,10 +1,11 @@
-﻿@using PagedList.Mvc
+﻿@using Garage2._0.Models
+@using PagedList.Mvc
 @model PagedList.IPagedList<Garage2._0.Models.Vehicle>
 <link href="~/Content/PagedList.css" rel="stylesheet" type="text/css" />
 
 @{
     ViewBag.Title = "Parked vehicles";
-    var first = Model.First();
+    var first = new Vehicle();
 }
 
 <h2>@ViewBag.Title</h2>
