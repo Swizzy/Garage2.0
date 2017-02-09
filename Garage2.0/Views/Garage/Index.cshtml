@@ -12,18 +12,25 @@
 <p>
     @Html.ActionLink("Checkin new vehicle", "Checkin")
 </p>
+@using (Html.BeginForm("Index", "Garage", FormMethod.Get))
+{
+    <p>
+        Find by registration number: @Html.TextBox("SearchString", ViewBag.CurrentFilter as string)
+        <input type="submit" value="search" />
+    </p>
+}
 <table class="table">
     <tr>
         <th>
-            @Html.ActionLink(Html.DisplayNameFor(model => first.Type).ToString(), "Index", new { orderBy = "type" })
+            @Html.ActionLink(Html.DisplayNameFor(model => first.Type).ToString(), "Index", new { orderBy = "type", currentFilter = ViewBag.CurrentFilter})
             @*@Html.DisplayNameFor(model => first.Type)*@
         </th>
         <th>
-            @Html.ActionLink(Html.DisplayNameFor(model => first.RegNumber).ToString(), "Index", new { orderBy = "regnumber" })
+            @Html.ActionLink(Html.DisplayNameFor(model => first.RegNumber).ToString(), "Index", new { orderBy = "regnumber", currentFilter = ViewBag.CurrentFilter })
             @*@Html.DisplayNameFor(model => first.RegNumber)*@
         </th>
         <th>
-            @Html.ActionLink(Html.DisplayNameFor(model => first.Color).ToString(), "Index", new { orderBy = "color" })
+            @Html.ActionLink(Html.DisplayNameFor(model => first.Color).ToString(), "Index", new { orderBy = "color", currentFilter = ViewBag.CurrentFilter })
             @*@Html.DisplayNameFor(model => first.Color)*@
         </th>
         <th>

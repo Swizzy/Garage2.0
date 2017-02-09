@@ -17,9 +17,24 @@ namespace Garage2._0.Controllers
         private VehiclesContext db = new VehiclesContext();
 
         // GET: Garage
-        public ActionResult Index(string orderBy, string sortOrder, int page = 1)
+        public ActionResult Index(string orderBy, string currentFilter, string searchString, int page = 1)
         {
             IQueryable<Vehicle> vehicles = db.Vehicles;
+
+            if (searchString != null)
+            {
+                // If the search string is changed during paging, the page has to be reset to 1
+                page = 1;
+            }
+            else
+            {
+                searchString = currentFilter;
+            }
+            ViewBag.CurrentFilter = searchString;
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                vehicles = vehicles.Where(v => v.RegNumber.Contains(searchString));
+            }
 
             switch (orderBy)
             {
