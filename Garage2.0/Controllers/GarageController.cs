@@ -15,11 +15,13 @@ namespace Garage2._0.Controllers
 {
     public class GarageController : Controller
     {
-        private VehiclesContext db = new VehiclesContext();
+        private GarageContext db = new GarageContext();
 
         // GET: Garage
         public ActionResult Index(string orderBy, string currentFilter, string searchString, int page = 1)
         {
+            if (!db.GarageConfiguration.IsConfigured)
+                return RedirectToAction("Index", "Setup");
             IQueryable<Vehicle> vehicles = db.Vehicles;
 
             if (searchString != null)
@@ -58,6 +60,8 @@ namespace Garage2._0.Controllers
 
         public ActionResult Statistics(string type = null)
         {
+            if (!db.GarageConfiguration.IsConfigured)
+                return RedirectToAction("Index", "Setup");
             var now = DateTime.Now;
             var statistics = new Statistics();
             foreach (var vehicle in db.Vehicles)
@@ -71,6 +75,8 @@ namespace Garage2._0.Controllers
         // GET: Garage/Details/5
         public ActionResult Details(int? id)
         {
+            if (!db.GarageConfiguration.IsConfigured)
+                return RedirectToAction("Index", "Setup");
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -86,6 +92,8 @@ namespace Garage2._0.Controllers
         // GET: Garage/Create
         public ActionResult Checkin()
         {
+            if (!db.GarageConfiguration.IsConfigured)
+                return RedirectToAction("Index", "Setup");
             return View();
         }
 
@@ -110,6 +118,8 @@ namespace Garage2._0.Controllers
         // GET: Garage/Delete/5
         public ActionResult Checkout(int? id)
         {
+            if (!db.GarageConfiguration.IsConfigured)
+                return RedirectToAction("Index", "Setup");
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
