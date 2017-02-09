@@ -8,6 +8,7 @@ using System.Web;
 using System.Web.Mvc;
 using Garage2._0.DAL;
 using Garage2._0.Models;
+using PagedList;
 
 namespace Garage2._0.Controllers
 {
@@ -16,9 +17,9 @@ namespace Garage2._0.Controllers
         private VehiclesContext db = new VehiclesContext();
 
         // GET: Garage
-        public ActionResult Index()
+        public ActionResult Index(int page = 1)
         {
-            return View(db.Vehicles.ToList());
+            return View(db.Vehicles.OrderBy(v => v.Id).ToPagedList(page, 10));
         }
 
         // GET: Garage/Details/5
