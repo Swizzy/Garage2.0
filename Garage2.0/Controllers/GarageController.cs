@@ -58,38 +58,14 @@ namespace Garage2._0.Controllers
 
         public ActionResult Statistics(string type = null)
         {
-            switch (type)
+            var now = DateTime.Now;
+            var statistics = new Statistics();
+            foreach (var vehicle in db.Vehicles)
             {
-                case "typecolor":
-                    var typeColorStats = new VehicleTypeColorStatistics();
-                    foreach (var vehicle in db.Vehicles)
-                    {
-                        if (!typeColorStats.Statistics.ContainsKey(vehicle.Type))
-                            typeColorStats.Statistics[vehicle.Type] = new Dictionary<Vehicle.VehicleColor, int>();
-                        if (!typeColorStats.Statistics[vehicle.Type].ContainsKey(vehicle.Color))
-                            typeColorStats.Statistics[vehicle.Type][vehicle.Color] = 0;
-                        typeColorStats.Statistics[vehicle.Type][vehicle.Color] += 1;
-                    }
-                    return View("VehicleTypeColorStatistics", typeColorStats);
-                case "color":
-                    var colorStats = new VehicleColorStatistics();
-                    foreach (var vehicle in db.Vehicles)
-                    {
-                        if (!colorStats.Statistics.ContainsKey(vehicle.Color))
-                            colorStats.Statistics[vehicle.Color] = 0;
-                        colorStats.Statistics[vehicle.Color] += 1;
-                    }
-                    return View("VehicleColorStatistics", colorStats);
-                default:
-                    var typeStats = new VehicleTypeStatistics();
-                    foreach (var vehicle in db.Vehicles)
-                    {
-                        if (!typeStats.Statistics.ContainsKey(vehicle.Type))
-                            typeStats.Statistics[vehicle.Type] = 0;
-                        typeStats.Statistics[vehicle.Type] += 1;
-                    }
-                    return View("VehicleTypeStatistics", typeStats);
+                statistics.Update(vehicle, now, 60);
             }
+            return View(statistics);
+            
         }
 
         // GET: Garage/Details/5
@@ -168,3 +144,4 @@ namespace Garage2._0.Controllers
 
     }
 }
+

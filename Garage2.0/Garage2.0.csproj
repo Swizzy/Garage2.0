@@ -191,9 +191,7 @@
     <Content Include="Views\Garage\Checkout.cshtml" />
     <Content Include="Views\Garage\Details.cshtml" />
     <Content Include="Views\Garage\Index.cshtml" />
-    <Content Include="Views\Garage\VehicleTypeStatistics.cshtml" />
-    <Content Include="Views\Garage\VehicleColorStatistics.cshtml" />
-    <Content Include="Views\Garage\VehicleTypeColorStatistics.cshtml" />
+    <Content Include="Views\Garage\Statistics.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
