@@ -1,15 +1,13 @@
 ﻿@model Garage2._0.Models.Vehicle
 
 @{
-    ViewBag.Title = "Checkout";
+    ViewBag.Title = "Receipt";
 }
+<h2>Receipt</h2>
 
-<h2>Checkout</h2>
-
-<h3>Are you sure you want to checkout this vehicle?</h3>
 <div>
     <h4>Vehicle</h4>
-    <hr />
+    <hr/>
     <dl class="dl-horizontal">
         <dt>
             @Html.DisplayNameFor(model => model.Type)
@@ -58,6 +56,14 @@
         <dd>
             @Html.DisplayFor(model => model.NumberOfWheels)
         </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Timestamp)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Timestamp)
+        </dd>
         
         <dt>
             @Html.DisplayNameFor(model => model.Cost)
@@ -68,13 +74,7 @@
         </dd>
 
     </dl>
-
-    @using (Html.BeginForm()) {
-        @Html.AntiForgeryToken()
-
-        <div class="form-actions no-color">
-            <input type="submit" value="Checkout" class="btn btn-default" /> |
-            @Html.ActionLink("Back to List", "Index")
-        </div>
-    }
 </div>
+<p>
+    @Html.ActionLink("Back to List", "Index")
+</p>

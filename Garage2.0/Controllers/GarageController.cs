@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
+using System.Data.Entity.Migrations;
 using System.Linq;
 using System.Net;
 using System.Web;
@@ -129,6 +130,8 @@ namespace Garage2._0.Controllers
             {
                 return HttpNotFound();
             }
+            vehicle.Cost = Math.Round((decimal) (DateTime.Now - vehicle.Timestamp).TotalMinutes) * db.GarageConfiguration.PricePerMinute;
+            db.Vehicles.AddOrUpdate(v => v.Id == vehicle.Id, vehicle);
             return View(vehicle);
         }
 
@@ -140,7 +143,7 @@ namespace Garage2._0.Controllers
             Vehicle vehicle = db.Vehicles.Find(id);
             db.Vehicles.Remove(vehicle);
             db.SaveChanges();
-            return RedirectToAction("Index");
+            return View("Receipt", vehicle);
         }
 
         protected override void Dispose(bool disposing)

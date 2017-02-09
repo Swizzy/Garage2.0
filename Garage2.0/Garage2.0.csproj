@@ -199,6 +199,7 @@
     <Content Include="Views\Garage\Index.cshtml" />
     <Content Include="Views\Garage\Statistics.cshtml" />
     <Content Include="Views\Setup\Index.cshtml" />
+    <Content Include="Views\Garage\Receipt.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
