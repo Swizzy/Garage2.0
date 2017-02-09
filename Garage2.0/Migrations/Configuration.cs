@@ -21,8 +21,8 @@ namespace Garage2._0.Migrations
             var rand = new Random();
             for (var i = 0; i < list.Capacity; i++)
             {
-                var vehicleType = (Vehicle.VehicleType) rand.Next(minValue: 0, maxValue: 4);
-                var vehicleColor = (Vehicle.VehicleColor) rand.Next(minValue: 0, maxValue: 5);
+                var vehicleType = (Vehicle.VehicleType) rand.Next(minValue: 0, maxValue: 5);
+                var vehicleColor = (Vehicle.VehicleColor) rand.Next(minValue: 0, maxValue: 6);
                 list.Add(new Vehicle()
                 {
                     Color = vehicleColor,
