@@ -1,0 +1,22 @@
+﻿@using Garage2._0.Models
+@model Garage2._0.ViewModels.VehicleTypeStatistics
+
+@{
+    ViewBag.Title = "Statistics";
+}
+
+<h2>Statistics by Vehicle Type</h2>
+
+<table class="StatsTable">
+    <tr>
+        <th>@Html.DisplayNameFor(t => new Vehicle().Type)</th>
+        <th>Count</th>
+    </tr>
+    @foreach (var item in Model.Statistics)
+    {
+        <tr>
+            <td>@Html.DisplayFor(m => item.Key)</td>
+            <td>@Html.DisplayFor(m => item.Value)</td>
+        </tr>
+    }
+</table>
