@@ -15,16 +15,20 @@
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => first.Type)
+            @Html.ActionLink(Html.DisplayNameFor(model => first.Type).ToString(), "Index", new { orderBy = "type" })
+            @*@Html.DisplayNameFor(model => first.Type)*@
         </th>
         <th>
-            @Html.DisplayNameFor(model => first.RegNumber)
+            @Html.ActionLink(Html.DisplayNameFor(model => first.RegNumber).ToString(), "Index", new { orderBy = "regnumber" })
+            @*@Html.DisplayNameFor(model => first.RegNumber)*@
         </th>
         <th>
-            @Html.DisplayNameFor(model => first.Color)
+            @Html.ActionLink(Html.DisplayNameFor(model => first.Color).ToString(), "Index", new { orderBy = "color" })
+            @*@Html.DisplayNameFor(model => first.Color)*@
         </th>
         <th>
-            @Html.DisplayNameFor(model => first.Timestamp)
+            @Html.ActionLink(Html.DisplayNameFor(model => first.Timestamp).ToString(), "Index")
+            @*@Html.DisplayNameFor(model => first.Timestamp)*@
         </th>
         <th></th>
     </tr>

@@ -17,9 +17,27 @@ namespace Garage2._0.Controllers
         private VehiclesContext db = new VehiclesContext();
 
         // GET: Garage
-        public ActionResult Index(int page = 1)
+        public ActionResult Index(string orderBy, string sortOrder, int page = 1)
         {
-            return View(db.Vehicles.OrderBy(v => v.Id).ToPagedList(page, 10));
+            IQueryable<Vehicle> vehicles = db.Vehicles;
+
+            switch (orderBy)
+            {
+                case "type":
+                    vehicles = vehicles.OrderBy(v => v.Type);
+                    break;
+                case "regnumber":
+                    vehicles = vehicles.OrderBy(v => v.RegNumber);
+                    break;
+                case "color":
+                    vehicles = vehicles.OrderBy(v => v.Color);
+                    break;
+                default:
+                    vehicles = vehicles.OrderBy(v => v.Id);
+                    break;
+            }
+
+            return View(vehicles.ToPagedList(page, 10));
         }
 
         // GET: Garage/Details/5
@@ -95,5 +113,6 @@ namespace Garage2._0.Controllers
             }
             base.Dispose(disposing);
         }
+
     }
 }
