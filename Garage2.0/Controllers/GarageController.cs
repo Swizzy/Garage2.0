@@ -21,6 +21,7 @@ namespace Garage2._0.Controllers
         public ActionResult Index(string orderBy, string currentFilter, string searchString, int page = 1)
         {
             IQueryable<Vehicle> vehicles = db.Vehicles;
+            
 
             if (searchString != null)
             {
@@ -34,6 +35,8 @@ namespace Garage2._0.Controllers
             ViewBag.CurrentFilter = searchString;
             if (!String.IsNullOrEmpty(searchString))
             {
+                //vehicles = vehicles.Where(v => v.RegNumber.Contains(searchString) || 
+                //                           v.Color.ToString().Contains(searchString));
                 vehicles = vehicles.Where(v => v.RegNumber.Contains(searchString));
             }
 

@@ -12,13 +12,28 @@
 <p>
     @Html.ActionLink("Checkin new vehicle", "Checkin")
 </p>
-@using (Html.BeginForm("Index", "Garage", FormMethod.Get))
-{
-    <p>
-        Find by registration number: @Html.TextBox("SearchString", ViewBag.CurrentFilter as string)
-        <input type="submit" value="search" />
-    </p>
-}
+
+<p>
+    @using (Html.BeginForm("Index", "Garage", FormMethod.Get))
+    {
+        <span>
+            Find by registration number: @Html.TextBox("SearchString", ViewBag.CurrentFilter as string)
+            @Html.EnumDropDownListFor(model => first.Type, "All vehicle types", null)
+
+            <input type="submit" value="search" />
+
+        </span>
+
+        <span>
+            <a href="#" data-toggle="collapse" data-target="#advancedsearch">Advanced search...</a><br/><br />
+            <span id="advancedsearch" class="collapse">
+                Find by vehicle color: @Html.EnumDropDownListFor(model => first.Color)
+             </span>
+        </span>
+
+    }
+</p>
+       
 <table class="table table-striped">
     <tr>
         <th>
