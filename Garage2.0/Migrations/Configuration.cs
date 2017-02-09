@@ -7,16 +7,23 @@ using Garage2._0.Models;
 
 namespace Garage2._0.Migrations
 {
-    internal sealed class Configuration : DbMigrationsConfiguration<VehiclesContext>
+    public sealed class Configuration : DbMigrationsConfiguration<GarageContext>
     {
         public Configuration()
         {
             AutomaticMigrationsEnabled = false;
         }
 
-        protected override void Seed(VehiclesContext context)
+        protected override void Seed(GarageContext context)
         {
             context.Vehicles.RemoveRange(context.Vehicles.ToArray());
+            context.Configurations.Add(new Models.Configuration()
+            {
+                Id = 1,
+                IsConfigured = true,
+                ParkingSpaces = 100,
+                PricePerMinute = 60
+            });
             var list = new List<Vehicle>(100);
             var rand = new Random();
             for (var i = 0; i < list.Capacity; i++)
