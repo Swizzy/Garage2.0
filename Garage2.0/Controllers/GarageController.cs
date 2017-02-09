@@ -15,11 +15,13 @@ namespace Garage2._0.Controllers
 {
     public class GarageController : Controller
     {
-        private VehiclesContext db = new VehiclesContext();
+        private GarageContext db = new GarageContext();
 
         // GET: Garage
         public ActionResult Index(string orderBy, string currentFilter, string searchString, int page = 1)
         {
+            if (!db.GarageConfiguration.IsConfigured)
+                return RedirectToAction("Index", "Setup");
             IQueryable<Vehicle> vehicles = db.Vehicles;
             
 
@@ -61,43 +63,23 @@ namespace Garage2._0.Controllers
 
         public ActionResult Statistics(string type = null)
         {
-            switch (type)
+            if (!db.GarageConfiguration.IsConfigured)
+                return RedirectToAction("Index", "Setup");
+            var now = DateTime.Now;
+            var statistics = new Statistics();
+            foreach (var vehicle in db.Vehicles)
             {
-                case "typecolor":
-                    var typeColorStats = new VehicleTypeColorStatistics();
-                    foreach (var vehicle in db.Vehicles)
-                    {
-                        if (!typeColorStats.Statistics.ContainsKey(vehicle.Type))
-                            typeColorStats.Statistics[vehicle.Type] = new Dictionary<Vehicle.VehicleColor, int>();
-                        if (!typeColorStats.Statistics[vehicle.Type].ContainsKey(vehicle.Color))
-                            typeColorStats.Statistics[vehicle.Type][vehicle.Color] = 0;
-                        typeColorStats.Statistics[vehicle.Type][vehicle.Color] += 1;
-                    }
-                    return View("VehicleTypeColorStatistics", typeColorStats);
-                case "color":
-                    var colorStats = new VehicleColorStatistics();
-                    foreach (var vehicle in db.Vehicles)
-                    {
-                        if (!colorStats.Statistics.ContainsKey(vehicle.Color))
-                            colorStats.Statistics[vehicle.Color] = 0;
-                        colorStats.Statistics[vehicle.Color] += 1;
-                    }
-                    return View("VehicleColorStatistics", colorStats);
-                default:
-                    var typeStats = new VehicleTypeStatistics();
-                    foreach (var vehicle in db.Vehicles)
-                    {
-                        if (!typeStats.Statistics.ContainsKey(vehicle.Type))
-                            typeStats.Statistics[vehicle.Type] = 0;
-                        typeStats.Statistics[vehicle.Type] += 1;
-                    }
-                    return View("VehicleTypeStatistics", typeStats);
+                statistics.Update(vehicle, now, db.GarageConfiguration.PricePerMinute);
             }
+            return View(statistics);
+            
         }
 
         // GET: Garage/Details/5
         public ActionResult Details(int? id)
         {
+            if (!db.GarageConfiguration.IsConfigured)
+                return RedirectToAction("Index", "Setup");
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -113,6 +95,8 @@ namespace Garage2._0.Controllers
         // GET: Garage/Create
         public ActionResult Checkin()
         {
+            if (!db.GarageConfiguration.IsConfigured)
+                return RedirectToAction("Index", "Setup");
             return View();
         }
 
@@ -137,6 +121,8 @@ namespace Garage2._0.Controllers
         // GET: Garage/Delete/5
         public ActionResult Checkout(int? id)
         {
+            if (!db.GarageConfiguration.IsConfigured)
+                return RedirectToAction("Index", "Setup");
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -171,3 +157,4 @@ namespace Garage2._0.Controllers
 
     }
 }
+
