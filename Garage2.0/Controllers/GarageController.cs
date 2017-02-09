@@ -66,7 +66,7 @@ namespace Garage2._0.Controllers
             var statistics = new Statistics();
             foreach (var vehicle in db.Vehicles)
             {
-                statistics.Update(vehicle, now, 60);
+                statistics.Update(vehicle, now, db.GarageConfiguration.PricePerMinute);
             }
             return View(statistics);
             
