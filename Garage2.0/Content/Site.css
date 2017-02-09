@@ -23,8 +23,14 @@ textarea {
     max-width: 280px;
 }
 
+.table td, .table th { border-left: 1px solid #dddddd; }
+
+.table tr {
+    border-bottom: 1px solid #dddddd;
+    border-right: 1px solid #dddddd;
+}
+
 .StatsTable td, .StatsTable th {
-    border: 1px solid black;
-    text-align: center;
     min-width: 100px;
+    text-align: center;
 }

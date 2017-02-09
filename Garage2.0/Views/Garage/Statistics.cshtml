@@ -15,7 +15,7 @@
 
 <h2>@Html.DisplayNameFor(m => m.TypeColorStatistics)</h2>
 
-<table class="StatsTable">
+<table class="table table-striped StatsTable">
     <tr>
         <th>@Html.DisplayNameFor(t => new Vehicle().Type)</th>
         <th>Count</th>
@@ -31,7 +31,7 @@
 
 <h2>@Html.DisplayNameFor(m => m.ColorStatistics)</h2>
 
-<table class="StatsTable">
+<table class="table table-striped StatsTable">
     <tr>
         <th>@Html.DisplayNameFor(t => new Vehicle().Color)</th>
         <th>Count</th>
@@ -47,7 +47,7 @@
 
 <h2>@Html.DisplayNameFor(m => m.TypeColorStatistics)</h2>
 
-<table class="StatsTable">
+<table class="table table-striped StatsTable">
     <tr>
         <th>@Html.DisplayNameFor(t => new Vehicle().Type)</th>
         @foreach (var color in Enum.GetNames(typeof(Vehicle.VehicleColor)))
