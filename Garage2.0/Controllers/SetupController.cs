@@ -14,7 +14,7 @@ namespace Garage2._0.Controllers
         {
             if (db.GarageConfiguration.IsConfigured)
                 return RedirectToAction("Index", "Garage");
-            return View(db.Configurations.ToList());
+            return View();
         }
 
         [HttpPost]
