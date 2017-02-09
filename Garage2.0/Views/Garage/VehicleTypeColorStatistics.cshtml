@@ -1,0 +1,39 @@
+﻿@using Garage2._0.Models
+@model Garage2._0.ViewModels.VehicleTypeColorStatistics
+
+@{
+    ViewBag.Title = "Statistics";
+}
+
+<h2>Statistics by Vehicle Type and Color</h2>
+
+<table class="StatsTable">
+    <tr>
+        <th>@Html.DisplayNameFor(t => new Vehicle().Type)</th>
+        @foreach (var color in Enum.GetNames(typeof(Vehicle.VehicleColor)))
+        {
+            <th>
+                @Html.DisplayFor(t => color)
+            </th>
+        }
+    </tr>
+    @foreach (var item in Model.Statistics)
+    {
+        <tr>
+            <td>@Html.DisplayFor(m => item.Key)</td>
+            @foreach (Vehicle.VehicleColor color in Enum.GetValues(typeof(Vehicle.VehicleColor)))
+            {
+                if (item.Value.ContainsKey(color))
+                {
+                    <td>
+                        @Html.DisplayFor(t => item.Value[color])
+                    </td>
+                }
+                else
+                {
+                    <td></td>
+                }
+            }
+        </tr>
+    }
+</table>
