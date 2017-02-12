@@ -154,6 +154,10 @@
     <Compile Include="Migrations\201702091432251_AddSetup.Designer.cs">
       <DependentUpon>201702091432251_AddSetup.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201702121148013_AddCost.cs" />
+    <Compile Include="Migrations\201702121148013_AddCost.Designer.cs">
+      <DependentUpon>201702121148013_AddCost.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Configuration.cs" />
     <Compile Include="Models\Vehicle.cs" />
@@ -199,6 +203,7 @@
     <Content Include="Views\Garage\Index.cshtml" />
     <Content Include="Views\Garage\Statistics.cshtml" />
     <Content Include="Views\Setup\Index.cshtml" />
+    <Content Include="Views\Garage\Receipt.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -220,6 +225,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201702091432251_AddSetup.resx">
       <DependentUpon>201702091432251_AddSetup.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201702121148013_AddCost.resx">
+      <DependentUpon>201702121148013_AddCost.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

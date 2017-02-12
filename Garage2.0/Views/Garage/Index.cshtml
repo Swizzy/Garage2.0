@@ -9,10 +9,14 @@
 }
 
 <h2>@ViewBag.Title</h2>
-
 <p>
-    @Html.ActionLink("Checkin new vehicle", "Checkin")
+    @ViewBag.Vacant
 </p>
+@if (ViewBag.HasVacantSpots) {
+    <p>
+        @Html.ActionLink("Checkin new vehicle", "Checkin")
+    </p>
+}
 @using (Html.BeginForm("Index", "Garage", FormMethod.Get))
 {
     <p>
