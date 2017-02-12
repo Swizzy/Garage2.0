@@ -131,7 +131,8 @@ namespace Garage2._0.Controllers
                 return HttpNotFound();
             }
             vehicle.Cost = Math.Round((decimal) (DateTime.Now - vehicle.Timestamp).TotalMinutes) * db.GarageConfiguration.PricePerMinute;
-            db.Vehicles.AddOrUpdate(v => v.Id == vehicle.Id, vehicle);
+            db.Vehicles.AddOrUpdate(v => v.Id, vehicle);
+            db.SaveChanges();
             return View(vehicle);
         }
 

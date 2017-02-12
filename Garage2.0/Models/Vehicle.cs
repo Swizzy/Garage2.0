@@ -33,7 +33,6 @@ namespace Garage2._0.Models
         public DateTime Timestamp { get; set; }
         [Display(Name = "Checkout Cost")]
         [DisplayFormat(DataFormatString = "{0:c}")]
-        [NotMapped]
         public decimal Cost { get; set; }
 
 
