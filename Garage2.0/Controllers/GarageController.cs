@@ -56,10 +56,15 @@ namespace Garage2._0.Controllers
                     break;
             }
 
+            var total = db.GarageConfiguration.ParkingSpaces;
+            var vacant = total - db.Vehicles.Count();
+            ViewBag.Vacant = $"Vacant parking spots: {vacant}/{total}";
+            ViewBag.HasVacantSpots = vacant > 0;
+
             return View(vehicles.ToPagedList(page, 10));
         }
 
-        public ActionResult Statistics(string type = null)
+        public ActionResult Statistics()
         {
             if (!db.GarageConfiguration.IsConfigured)
                 return RedirectToAction("Index", "Setup");
@@ -70,7 +75,6 @@ namespace Garage2._0.Controllers
                 statistics.Update(vehicle, now, db.GarageConfiguration.PricePerMinute);
             }
             return View(statistics);
-            
         }
 
         // GET: Garage/Details/5
@@ -95,11 +99,13 @@ namespace Garage2._0.Controllers
         {
             if (!db.GarageConfiguration.IsConfigured)
                 return RedirectToAction("Index", "Setup");
+            if (db.Vehicles.Count() >= db.GarageConfiguration.ParkingSpaces)
+                return RedirectToAction("Index");
             return View();
         }
 
         // POST: Garage/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+        // To protect from overposting attacks, please enable the specific properties you want to bind to, for
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
