@@ -38,6 +38,28 @@ textarea {
 .selectStyle {
     height: 24px;
 }
+ 
+.dl-horizontal dt {
+    text-align: left;
+}
+.receipt .dl-horizontal {
+    width: 300px;
+}
+
+.receipt .dl-horizontal dt {
+    float: left;
+    width: 160px;
+    overflow: hidden;
+    clear: left;
+    text-align: left;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.receipt .dl-horizontal dd {
+   text-align: right;
+}
+
 
 @media print
 {

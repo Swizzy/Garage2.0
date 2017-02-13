@@ -31,6 +31,9 @@ namespace Garage2._0.Models
         [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd HH:mm}")]
         [Required]
         public DateTime Timestamp { get; set; }
+        [Display(Name = "Checkout time")]
+        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd HH:mm}")]
+        public DateTime CheckoutTime { get; set; }
         [Display(Name = "Checkout Cost")]
         [DisplayFormat(DataFormatString = "{0:c}")]
         public decimal Cost { get; set; }
