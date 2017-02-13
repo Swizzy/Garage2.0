@@ -55,13 +55,17 @@ namespace Garage2._0.Controllers
                     vehicles = vehicles.OrderBy(v => v.Id);
                     break;
             }
-
-            var total = db.GarageConfiguration.ParkingSpaces;
-            var vacant = total - db.Vehicles.Count();
-            ViewBag.Vacant = $"Vacant parking spots: {vacant}/{total}";
-            ViewBag.HasVacantSpots = vacant > 0;
+            HasVacantSpots();
 
             return View(vehicles.ToPagedList(page, 10));
+        }
+
+        private bool HasVacantSpots() {
+            var total = db.GarageConfiguration.ParkingSpaces;
+            var vacant = (int)Math.Ceiling((total * 3 - db.Vehicles.ToArray().Sum(v => v.Units)) / 3.0);
+            ViewBag.Vacant = $"Vacant parking spots: {vacant}/{total}";
+            ViewBag.HasVacantSpots = vacant > 0;
+            return ViewBag.HasVacantSpots;
         }
 
         public ActionResult Statistics()
@@ -94,12 +98,47 @@ namespace Garage2._0.Controllers
             return View(vehicle);
         }
 
+        private long FindNextFreeUnit(long lastFreeUnit, IEnumerator<Vehicle> enumerator) {
+            if (lastFreeUnit < enumerator.Current.ParkingUnit)
+                return lastFreeUnit;
+            lastFreeUnit += enumerator.Current.Units;
+            while (enumerator.MoveNext()) {
+                if (lastFreeUnit < enumerator.Current.ParkingUnit)
+                    return lastFreeUnit;
+                lastFreeUnit = enumerator.Current.ParkingUnit + enumerator.Current.Units;
+            }
+            return lastFreeUnit;
+        }
+
+        private long FindFirstFreeUnit(int size) {
+            using (var enumerator = ((IEnumerable<Vehicle>)db.Vehicles).GetEnumerator()) {
+                var first = 0L;
+                while (enumerator.MoveNext()) {
+                    first = FindNextFreeUnit(first, enumerator);
+                    if (size == 1)
+                        return first;
+                    if (first % 3 == 0) {
+                        if (enumerator.Current == null)
+                            return first;
+                        if (enumerator.Current.ParkingUnit < first + size)
+                            return first;
+                        first += 3; // Find next available spot
+                    }
+                    else {
+                        first -= first % 3;
+                        first += 3;
+                    }
+                }
+                return first;
+            }
+
+        }
         // GET: Garage/Create
         public ActionResult Checkin()
         {
             if (!db.GarageConfiguration.IsConfigured)
                 return RedirectToAction("Index", "Setup");
-            if (db.Vehicles.Count() >= db.GarageConfiguration.ParkingSpaces)
+            if (!HasVacantSpots())
                 return RedirectToAction("Index");
             return View();
         }
@@ -114,6 +153,12 @@ namespace Garage2._0.Controllers
             if (ModelState.IsValid)
             {
                 vehicle.Timestamp = DateTime.Now;
+
+                var firstFreeUnit = FindFirstFreeUnit(vehicle.Units);
+                if (firstFreeUnit + vehicle.Units >= db.GarageConfiguration.MaxUnits) {
+                    //TODO: Handle this error
+                }
+                vehicle.ParkingUnit = firstFreeUnit;
                 db.Vehicles.Add(vehicle);
                 db.SaveChanges();
                 return RedirectToAction("Index");
