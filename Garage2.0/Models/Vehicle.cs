@@ -41,6 +41,7 @@ namespace Garage2._0.Models
                 switch (Type) {
                     case VehicleType.Airplane:
                     case VehicleType.Boat:
+                        return $"{ParkingUnit / 3 + 1} & {(ParkingUnit + 3) / 3 + 1} & {(ParkingUnit + 6) / 3 + 1}";
                     case VehicleType.Bus:
                         return $"{ParkingUnit / 3 + 1} & {(ParkingUnit + 3) / 3 + 1}";
                     case VehicleType.Car:
@@ -60,6 +61,7 @@ namespace Garage2._0.Models
             {
                 case VehicleType.Airplane:
                 case VehicleType.Boat:
+                    return 9;
                 case VehicleType.Bus:
                     return 6;
                 case VehicleType.Car:
