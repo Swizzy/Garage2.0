@@ -177,8 +177,8 @@ namespace Garage2._0.Controllers
                 vehicle.Timestamp = DateTime.Now;
 
                 var firstFreeUnit = FindFirstFreeUnit(vehicle.Units);
-                if (firstFreeUnit + vehicle.Units >= db.GarageConfiguration.MaxUnits) {
-                    //TODO: Handle this error
+                if (firstFreeUnit + vehicle.Units > db.GarageConfiguration.MaxUnits) {
+                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
                 }
                 vehicle.ParkingUnit = firstFreeUnit;
                 db.Vehicles.Add(vehicle);
