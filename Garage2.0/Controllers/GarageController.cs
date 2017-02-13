@@ -111,7 +111,7 @@ namespace Garage2._0.Controllers
         }
 
         private long FindFirstFreeUnit(int size) {
-            using (var enumerator = ((IEnumerable<Vehicle>)db.Vehicles).GetEnumerator()) {
+            using (var enumerator = db.Vehicles.OrderBy(v => v.ParkingUnit).GetEnumerator()) {
                 var first = 0L;
                 while (enumerator.MoveNext()) {
                     first = FindNextFreeUnit(first, enumerator);
@@ -120,12 +120,13 @@ namespace Garage2._0.Controllers
                     if (first % 3 == 0) {
                         if (enumerator.Current == null)
                             return first;
-                        if (enumerator.Current.ParkingUnit < first + size)
+                        if (enumerator.Current.ParkingUnit >= first + size)
                             return first;
                         first += 3; // Find next available spot
                     }
                     else {
                         first -= first % 3;
+                        first += enumerator.Current?.Units ?? 3;
                         first += 3;
                     }
                 }
