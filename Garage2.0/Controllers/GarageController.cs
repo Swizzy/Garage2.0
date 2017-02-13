@@ -235,6 +235,57 @@ namespace Garage2._0.Controllers
             return View("Receipt", vehicle);
         }
 
+        private void AddVehicleSpot(int index, Vehicle vehicle, Overview[] spots)
+        {
+            if (vehicle.Units >= 3)
+                for (var i = 0; i < vehicle.Units / 3; i++)
+                {
+                    spots[index + i] = new Overview(index + i + 1, vehicle.Id);
+                }
+            else
+            {
+                spots[index] = new Overview(index + 1, vehicle.Id);
+            }
+        }
+
+        private void AddVehicleSpot(int index, IEnumerator<Vehicle> enumerator, Overview[] spots, bool advance = true)
+        {
+            if (enumerator.Current?.ParkingUnit / 3 == index)
+            {
+                AddVehicleSpot(index, enumerator.Current, spots);
+            }
+            else if (enumerator.Current?.ParkingUnit / 3 < index && advance)
+            {
+                enumerator.MoveNext();
+                AddVehicleSpot(index, enumerator, spots, false);
+            }
+            else if (enumerator.Current == null && advance)
+                AddVehicleSpot(index, enumerator, spots, false);
+        }
+
+        public ActionResult Overview(int page = 1)
+        {
+            if (!db.GarageConfiguration.IsConfigured)
+                return RedirectToAction("Index", "Setup");
+            var spots = new Overview[db.GarageConfiguration.ParkingSpaces];
+            using (var enumerator = db.Vehicles.OrderBy(v => v.ParkingUnit).GetEnumerator())
+            {
+                for (var i = 0; i < spots.Length; i++)
+                {
+                    if (spots[i] != null)
+                        continue;
+                    if (enumerator.Current == null && enumerator.MoveNext())
+                        spots[i] = new Overview(i + 1);
+                    if (enumerator.Current != null)
+                        AddVehicleSpot(i, enumerator, spots); // Add next and advance if needed
+                    if (spots[i] != null)
+                        continue;
+                    spots[i] = new Overview(i + 1);
+                }
+            }
+            return View(new PagedList<Overview>(spots, page, 100));
+        }
+
         protected override void Dispose(bool disposing)
         {
             if (disposing)

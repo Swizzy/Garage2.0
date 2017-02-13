@@ -35,6 +35,22 @@ textarea {
     text-align: center;
 }
 
+
+.overviewTable a {
+    color: white;
+}
+
+.overviewTaken {
+    text-align: center;
+    background-color: red;
+}
+
+.overviewFree {
+    text-align: center;
+    background-color: white;
+    color: black;
+}
+
 .selectStyle {
     height: 24px;
 }
