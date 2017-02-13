@@ -134,6 +134,26 @@ namespace Garage2._0.Controllers
             }
 
         }
+
+        private IEnumerable<SelectListItem> GetSupportedList()
+        {
+            var maxUnits = db.GarageConfiguration.MaxUnits;
+            var sizes = Enum.GetValues(typeof(Vehicle.VehicleType))
+                            .Cast<Vehicle.VehicleType>()
+                            .Select(Vehicle.GetUnitSpace)
+                            .Distinct();
+            var supportedSize = sizes.Where(s => FindFirstFreeUnit(s) + s <= maxUnits);
+            var selectList = Enum.GetValues(typeof(Vehicle.VehicleType))
+                                 .Cast<Vehicle.VehicleType>()
+                                 .Where(t => supportedSize.Contains(Vehicle.GetUnitSpace(t)))
+                                 .Select(e => new SelectListItem
+                                 {
+                                    Value = ((int) e).ToString(),
+                                    Text = e.ToString()
+                                 });
+            return selectList;
+        }
+
         // GET: Garage/Create
         public ActionResult Checkin()
         {
@@ -141,6 +161,7 @@ namespace Garage2._0.Controllers
                 return RedirectToAction("Index", "Setup");
             if (!HasVacantSpots())
                 return RedirectToAction("Index");
+            ViewBag.SupportedList = GetSupportedList();
             return View();
         }
 
@@ -156,8 +177,8 @@ namespace Garage2._0.Controllers
                 vehicle.Timestamp = DateTime.Now;
 
                 var firstFreeUnit = FindFirstFreeUnit(vehicle.Units);
-                if (firstFreeUnit + vehicle.Units >= db.GarageConfiguration.MaxUnits) {
-                    //TODO: Handle this error
+                if (firstFreeUnit + vehicle.Units > db.GarageConfiguration.MaxUnits) {
+                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
                 }
                 vehicle.ParkingUnit = firstFreeUnit;
                 db.Vehicles.Add(vehicle);
