@@ -19,12 +19,23 @@ namespace Garage2._0.Controllers
         private GarageContext db = new GarageContext();
 
         // GET: Garage
-        public ActionResult Index(string orderBy, string currentFilter, string searchString, int page = 1)
+        public ActionResult Index(string orderBy, string currentFilter, string searchString, string selectedvehicletype, int page = 1)
         {
             if (!db.GarageConfiguration.IsConfigured)
                 return RedirectToAction("Index", "Setup");
             IQueryable<Vehicle> vehicles = db.Vehicles;
-            
+
+            ViewBag.selectedvehicletype = selectedvehicletype;
+
+            // Vehicle type
+            if (!String.IsNullOrEmpty(selectedvehicletype))
+            {
+                Vehicle.VehicleType resulttype;
+                if (Enum.TryParse(selectedvehicletype, out resulttype))
+                {
+                    vehicles = vehicles.Where(v => v.Type == resulttype);
+                }
+            }
 
             if (searchString != null)
             {
@@ -38,8 +49,6 @@ namespace Garage2._0.Controllers
             ViewBag.CurrentFilter = searchString;
             if (!String.IsNullOrEmpty(searchString))
             {
-                //vehicles = vehicles.Where(v => v.RegNumber.Contains(searchString) || 
-                //                           v.Color.ToString().Contains(searchString));
                 vehicles = vehicles.Where(v => v.RegNumber.Contains(searchString));
             }
 
@@ -53,6 +62,9 @@ namespace Garage2._0.Controllers
                     break;
                 case "color":
                     vehicles = vehicles.OrderBy(v => v.Color);
+                    break;
+                case "checkintime":
+                    vehicles = vehicles.OrderBy(v => v.Timestamp);
                     break;
                 default:
                     vehicles = vehicles.OrderBy(v => v.Id);

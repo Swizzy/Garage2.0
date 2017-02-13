@@ -23,28 +23,24 @@
     {
         <span>
             Find by registration number: @Html.TextBox("SearchString", ViewBag.CurrentFilter as string)
-            @Html.EnumDropDownListFor(model => first.Type, "All vehicle types", null)
+            @Html.DropDownList("selectedvehicletype", new SelectList(Enum.GetNames(typeof(Vehicle.VehicleType))), "All vehicle types", htmlAttributes: new { @class = "selectStyle" })
 
-            <input type="submit" value="search" />
+            <input type="submit" value="Search" />
 
         </span>
 
-        <span>
-            <a href="#" data-toggle="collapse" data-target="#advancedsearch">Advanced search...</a><br/><br />
+        @*<span>
+            <a href="#" data-toggle="collapse" data-target="#advancedsearch">Advanced search...</a><br /><br />
             <span id="advancedsearch" class="collapse">
-                Find by vehicle color: @Html.EnumDropDownListFor(model => first.Color)
-             </span>
-        </span>
-
+                Find by vehicle color:
+                @Html.DropDownList("selectedvehiclecolor", new SelectList(Enum.GetNames(typeof(Vehicle.VehicleColor))), "All colors", htmlAttributes: new { @class = "selectStyle" })
+                Find by checkin date:
+                @Html.TextBox("selectcheckintime", "", htmlAttributes: new { @class = "searchTimeTextStyle", @placeholder = "yyyy-mm-dd" })
+            </span>
+        </span>*@
     }
 </p>
-@using (Html.BeginForm("Index", "Garage", FormMethod.Get))
-{
-    <p>
-        Find by registration number: @Html.TextBox("SearchString", ViewBag.CurrentFilter as string)
-        <input type="submit" value="search" />
-    </p>
-}
+   
 <table class="table table-striped">
     <tr>
         <th>
@@ -92,4 +88,6 @@
 Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
 
 @Html.PagedListPager(Model, page => Url.Action("Index",
-    new { page, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter }))
+    new { page, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter, selectedvehicletype = ViewBag.selectedvehicletype, selectedvehiclecolor = ViewBag.selectedvehiclecolor }))
+
+<!-- selectvehicletype, selectvehiclecolor, -->
