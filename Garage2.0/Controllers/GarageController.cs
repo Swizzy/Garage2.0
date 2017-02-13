@@ -190,6 +190,7 @@ namespace Garage2._0.Controllers
             if (ModelState.IsValid)
             {
                 vehicle.Timestamp = DateTime.Now;
+                vehicle.CheckoutTime = DateTime.Now;//Test
 
                 var firstFreeUnit = FindFirstFreeUnit(vehicle.Units);
                 if (firstFreeUnit + vehicle.Units > db.GarageConfiguration.MaxUnits) {
@@ -218,7 +219,9 @@ namespace Garage2._0.Controllers
             {
                 return HttpNotFound();
             }
-            vehicle.Cost = Math.Round((decimal) (DateTime.Now - vehicle.Timestamp).TotalMinutes) * db.GarageConfiguration.PricePerMinute;
+            vehicle.CheckoutTime = DateTime.Now;
+            //vehicle.Cost = Math.Round((decimal) (DateTime.Now - vehicle.Timestamp).TotalMinutes) * db.GarageConfiguration.PricePerMinute;
+            vehicle.Cost = Math.Round((decimal)(vehicle.CheckoutTime - vehicle.Timestamp).TotalMinutes) * db.GarageConfiguration.PricePerMinute;
             db.Vehicles.AddOrUpdate(v => v.Id, vehicle);
             db.SaveChanges();
             return View(vehicle);
@@ -230,9 +233,16 @@ namespace Garage2._0.Controllers
         public ActionResult CheckoutConfirmed(int id)
         {
             Vehicle vehicle = db.Vehicles.Find(id);
+
+            var receiptViewModel = new ReceiptViewModel();
+
+            //receiptViewModel.Update(vehicle, DateTime.Now, db.GarageConfiguration.PricePerMinute);
+            receiptViewModel.Update(vehicle, db.GarageConfiguration.PricePerMinute);
+
             db.Vehicles.Remove(vehicle);
             db.SaveChanges();
-            return View("Receipt", vehicle);
+
+            return View("Receipt", receiptViewModel);;
         }
 
         private void AddVehicleSpot(int index, Vehicle vehicle, Overview[] spots)

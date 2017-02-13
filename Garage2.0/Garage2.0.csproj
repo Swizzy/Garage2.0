@@ -162,10 +162,15 @@
     <Compile Include="Migrations\201702130810413_AddParkingSpot.Designer.cs">
       <DependentUpon>201702130810413_AddParkingSpot.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201702131044071_AddCheckoutTime.cs" />
+    <Compile Include="Migrations\201702131044071_AddCheckoutTime.Designer.cs">
+      <DependentUpon>201702131044071_AddCheckoutTime.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Configuration.cs" />
     <Compile Include="Models\Vehicle.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ViewModels\ReceiptViewModel.cs" />
     <Compile Include="ViewModels\Overview.cs" />
     <Compile Include="ViewModels\Statistics.cs" />
   </ItemGroup>
@@ -237,6 +242,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201702130810413_AddParkingSpot.resx">
       <DependentUpon>201702130810413_AddParkingSpot.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201702131044071_AddCheckoutTime.resx">
+      <DependentUpon>201702131044071_AddCheckoutTime.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
