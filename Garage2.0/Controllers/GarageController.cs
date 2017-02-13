@@ -73,7 +73,7 @@ namespace Garage2._0.Controllers
             if (!db.GarageConfiguration.IsConfigured)
                 return RedirectToAction("Index", "Setup");
             var now = DateTime.Now;
-            var statistics = new Statistics();
+            var statistics = new Statistics(db);
             foreach (var vehicle in db.Vehicles)
             {
                 statistics.Update(vehicle, now, db.GarageConfiguration.PricePerMinute);
