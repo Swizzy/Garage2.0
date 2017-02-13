@@ -34,7 +34,41 @@ namespace Garage2._0.Models
         [Display(Name = "Checkout Cost")]
         [DisplayFormat(DataFormatString = "{0:c}")]
         public decimal Cost { get; set; }
-
-
+        [NotMapped]
+        [Display(Name = "Parking Spot")]
+        public string ParkingSpot {
+            get {
+                switch (Type) {
+                    case VehicleType.Airplane:
+                    case VehicleType.Boat:
+                    case VehicleType.Bus:
+                        return $"{ParkingUnit / 3 + 1} & {(ParkingUnit + 3) / 3 + 1}";
+                    case VehicleType.Car:
+                        return (ParkingUnit / 3 + 1).ToString();
+                    case VehicleType.Motorcycle:
+                        return $"{ParkingUnit / 3 + 1}.{ParkingUnit % 3 + 1}";
+                    default:
+                        throw new ArgumentOutOfRangeException(nameof(Type));
+                }
+            }
+        }
+        public long ParkingUnit { get; set; }
+        [NotMapped]
+        public int Units => GetUnitSpace(Type);
+        public static int GetUnitSpace(VehicleType type) {
+            switch (type)
+            {
+                case VehicleType.Airplane:
+                case VehicleType.Boat:
+                case VehicleType.Bus:
+                    return 6;
+                case VehicleType.Car:
+                    return 3;
+                case VehicleType.Motorcycle:
+                    return 1;
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(Type));
+            }
+        }
     }
 }
