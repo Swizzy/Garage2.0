@@ -34,3 +34,59 @@ textarea {
     min-width: 100px;
     text-align: center;
 }
+
+
+.overviewTable a {
+    color: white;
+}
+
+.overviewTaken {
+    text-align: center;
+    background-color: red;
+}
+
+.overviewFree {
+    text-align: center;
+    background-color: white;
+    color: black;
+}
+
+.selectStyle {
+    height: 24px;
+}
+
+@media print
+{
+    .noprint {
+        display: none;
+    }
+
+    .dl-horizontal dt {
+    float: left;
+    width: 160px;
+    overflow: hidden;
+    clear: left;
+    text-align: left;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    }
+    .dl-horizontal dd {
+    margin-left: 180px;
+    }
+    .dl-horizontal dd:before,
+    .dl-horizontal dd:after {
+    display: table;
+    content: " ";
+    }
+    .dl-horizontal dd:after {
+    clear: both;
+    }
+    .dl-horizontal dd:before,
+    .dl-horizontal dd:after {
+    display: table;
+    content: " ";
+    }
+    .dl-horizontal dd:after {
+    clear: both;
+    }
+}

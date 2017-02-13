@@ -1,0 +1,38 @@
+﻿@using PagedList.Mvc
+@model PagedList.IPagedList<Garage2._0.ViewModels.Overview>
+
+@{
+    ViewBag.Title = "Overview";
+}
+
+<h2>@ViewBag.Title</h2>
+
+<table class="table table-bordered overviewTable">
+    @for (int i = 0; i < Model.Count(); i += 10)
+    {
+        <tr>
+            @foreach (var spot in Model.Skip(i).Take(10))
+            {
+                if (spot.IsTaken)
+                 {
+                     <td class="overviewTaken">
+                         @Html.ActionLink(spot.Id.ToString(), "Details", "Garage", new { Id = spot.VehicleId }, null)
+                     </td>
+                }
+                else
+                {
+                    <td class="overviewFree">
+                        @spot.Id.ToString()
+                    </td>
+                }
+            }
+        </tr>
+    }
+</table>
+@if (Model.PageCount > 1)
+{
+    <p>
+        Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+        @Html.PagedListPager(Model, page => Url.Action("Overview", new { page }))
+    </p>
+}
