@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Garage2._0.Models
 {
@@ -17,5 +18,7 @@ namespace Garage2._0.Models
         public int PricePerMinute { get; set; }
 
         public bool IsConfigured { get; set; }
+        [NotMapped]
+        public long MaxUnits => ParkingSpaces * 3;
     }
 }

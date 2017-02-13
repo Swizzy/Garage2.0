@@ -1,0 +1,18 @@
+namespace Garage2._0.Migrations
+{
+    using System;
+    using System.Data.Entity.Migrations;
+    
+    public partial class AddParkingSpot : DbMigration
+    {
+        public override void Up()
+        {
+            AddColumn("dbo.Vehicles", "ParkingUnit", c => c.Long(nullable: false));
+        }
+        
+        public override void Down()
+        {
+            DropColumn("dbo.Vehicles", "ParkingUnit");
+        }
+    }
+}
