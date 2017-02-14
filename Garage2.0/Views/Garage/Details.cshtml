@@ -76,6 +76,7 @@
 
     </dl>
 </div>
-<p>
+<div class="form-actions no-color">
+    <a href="@Url.Action("Checkout", new { Id = Model.Id })"><div class="btn btn-default">Checkout</div></a> |
     @Html.ActionLink("Back to List", "Index")
-</p>
+</div>
