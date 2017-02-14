@@ -25,22 +25,19 @@ namespace Garage2._0.Controllers
                 return RedirectToAction("Index", "Setup");
             IQueryable<Vehicle> vehicles = db.Vehicles;
 
-            ViewBag.selectedvehicletype = selectedvehicletype;
-
-            // Vehicle type
             if (!String.IsNullOrEmpty(selectedvehicletype))
             {
                 Vehicle.VehicleType resulttype;
                 if (Enum.TryParse(selectedvehicletype, out resulttype))
                 {
                     vehicles = vehicles.Where(v => v.Type == resulttype);
+                    ViewBag.selectedvehicletype = selectedvehicletype;
                 }
             }
 
             if (searchString != null)
             {
-                // If the search string is changed during paging, the page has to be reset to 1
-                page = 1;
+                page = 1; // If the search string is changed during paging, the page has to be reset to 1
             }
             else
             {
@@ -57,19 +54,30 @@ namespace Garage2._0.Controllers
                 case "type":
                     vehicles = vehicles.OrderBy(v => v.Type);
                     break;
+                case "type_dec":
+                    vehicles = vehicles.OrderByDescending(v => v.Type);
+                    break;
                 case "regnumber":
                     vehicles = vehicles.OrderBy(v => v.RegNumber);
+                    break;
+                case "regnumber_dec":
+                    vehicles = vehicles.OrderByDescending(v => v.RegNumber);
                     break;
                 case "color":
                     vehicles = vehicles.OrderBy(v => v.Color);
                     break;
-                case "checkintime":
-                    vehicles = vehicles.OrderBy(v => v.Timestamp);
+                case "color_dec":
+                    vehicles = vehicles.OrderByDescending(v => v.Color);
+                    break;
+                case "checkintime_dec":
+                    vehicles = vehicles.OrderByDescending(v => v.Timestamp);
                     break;
                 default:
-                    vehicles = vehicles.OrderBy(v => v.Id);
+                    vehicles = vehicles.OrderBy(v => v.Timestamp);
                     break;
             }
+            ViewBag.CurrentSort = orderBy;
+
             HasVacantSpots();
 
             return View(vehicles.ToPagedList(page, 10));

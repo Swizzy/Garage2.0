@@ -59,7 +59,7 @@ namespace Garage2._0.ViewModels
             TotalTimeString = sb.ToString();
 
             Price = pricePerMinute;
-            TotalPrice = (decimal)Math.Round((decimal)TotalTime.TotalMinutes * pricePerMinute);
+            TotalPrice = vehicle.Cost;
 
         }
     }

@@ -24,40 +24,24 @@
         <span>
             Find by registration number: @Html.TextBox("SearchString", ViewBag.CurrentFilter as string)
             @Html.DropDownList("selectedvehicletype", new SelectList(Enum.GetNames(typeof(Vehicle.VehicleType))), "All vehicle types", htmlAttributes: new { @class = "selectStyle" })
-
             <input type="submit" value="Search" />
-
         </span>
-
-        @*<span>
-            <a href="#" data-toggle="collapse" data-target="#advancedsearch">Advanced search...</a><br /><br />
-            <span id="advancedsearch" class="collapse">
-                Find by vehicle color:
-                @Html.DropDownList("selectedvehiclecolor", new SelectList(Enum.GetNames(typeof(Vehicle.VehicleColor))), "All colors", htmlAttributes: new { @class = "selectStyle" })
-                Find by checkin date:
-                @Html.TextBox("selectcheckintime", "", htmlAttributes: new { @class = "searchTimeTextStyle", @placeholder = "yyyy-mm-dd" })
-            </span>
-        </span>*@
     }
 </p>
    
 <table class="table table-striped">
     <tr>
         <th>
-            @Html.ActionLink(Html.DisplayNameFor(model => first.Type).ToString(), "Index", new { orderBy = "type", currentFilter = ViewBag.CurrentFilter})
-            @*@Html.DisplayNameFor(model => first.Type)*@
+            @Html.ActionLink(Html.DisplayNameFor(model => first.Type).ToString(), "Index", new { orderBy = ViewBag.CurrentSort == "type" ? "type_dec" : "type", currentFilter = ViewBag.CurrentFilter})
         </th>
         <th>
-            @Html.ActionLink(Html.DisplayNameFor(model => first.RegNumber).ToString(), "Index", new { orderBy = "regnumber", currentFilter = ViewBag.CurrentFilter })
-            @*@Html.DisplayNameFor(model => first.RegNumber)*@
+            @Html.ActionLink(Html.DisplayNameFor(model => first.RegNumber).ToString(), "Index", new { orderBy = ViewBag.CurrentSort == "regnumber" ? "regnumber_dec" : "regnumber", currentFilter = ViewBag.CurrentFilter })
         </th>
         <th>
-            @Html.ActionLink(Html.DisplayNameFor(model => first.Color).ToString(), "Index", new { orderBy = "color", currentFilter = ViewBag.CurrentFilter })
-            @*@Html.DisplayNameFor(model => first.Color)*@
+            @Html.ActionLink(Html.DisplayNameFor(model => first.Color).ToString(), "Index", new { orderBy = ViewBag.CurrentSort == "color" ? "color_dec" : "color", currentFilter = ViewBag.CurrentFilter })
         </th>
         <th>
-            @Html.ActionLink(Html.DisplayNameFor(model => first.Timestamp).ToString(), "Index")
-            @*@Html.DisplayNameFor(model => first.Timestamp)*@
+            @Html.ActionLink(Html.DisplayNameFor(model => first.Timestamp).ToString(), "Index", new { orderBy = ViewBag.CurrentSort == "checkintime" ? "checkintime_dec" : "checkintime", currentFilter = ViewBag.CurrentFilter })
         </th>
         <th></th>
     </tr>
@@ -91,5 +75,3 @@
         @Html.PagedListPager(Model, page => Url.Action("Index", new {page, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter, selectedvehicletype = ViewBag.selectedvehicletype, selectedvehiclecolor = ViewBag.selectedvehiclecolor}))
     </p>
 }
-
-<!-- selectvehicletype, selectvehiclecolor, -->
