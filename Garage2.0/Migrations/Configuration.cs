@@ -45,6 +45,7 @@ namespace Garage2._0.Migrations
         protected override void Seed(GarageContext context)
         {
             context.Vehicles.RemoveRange(context.Vehicles.ToArray());
+            context.Configurations.RemoveRange(context.Configurations.ToArray());
             context.Configurations.Add(new Models.Configuration()
             {
                 Id = 1,
