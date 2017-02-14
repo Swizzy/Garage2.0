@@ -23,6 +23,8 @@ namespace Garage2._0.Controllers
         {
             if (!db.GarageConfiguration.IsConfigured)
                 return RedirectToAction("Index", "Setup");
+            if (!db.Vehicles.Any())
+                return RedirectToAction("Checkin");
             IQueryable<Vehicle> vehicles = db.Vehicles;
 
             if (!String.IsNullOrEmpty(selectedvehicletype))
