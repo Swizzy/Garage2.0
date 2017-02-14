@@ -58,7 +58,7 @@ namespace Garage2._0.Models
         }
         public long ParkingUnit { get; set; }
         [NotMapped]
-        public int ParkingSpotId => (int) (ParkingUnit / 3 - ParkingUnit % 3);
+        public int ParkingSpotId => (int) Math.Floor(ParkingUnit / 3.0)+1;
 
         [NotMapped]
         public int Units => GetUnitSpace(Type);
