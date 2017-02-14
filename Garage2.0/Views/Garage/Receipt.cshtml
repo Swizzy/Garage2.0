@@ -1,80 +1,78 @@
-﻿@model Garage2._0.Models.Vehicle
+﻿@model Garage2._0.ViewModels.ReceiptViewModel
 
 @{
-    ViewBag.Title = "Receipt";
+    ViewBag.Title = "Parking Receipt";
 }
-<h2>Receipt</h2>
 
-<div>
-    <h4>Vehicle</h4>
-    <hr/>
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.Type)
-        </dt>
+<div class="receipt">
+    <h2>Parking Receipt</h2>
 
-        <dd>
-            @Html.DisplayFor(model => model.Type)
-        </dd>
+    <div>
+        <h4>Vehicle</h4>
+        <hr/>
+        <dl class="dl-horizontal">
+            <dt>
+                @Html.DisplayNameFor(model => model.Type):
+            </dt>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.RegNumber)
-        </dt>
+            <dd>
+                @Html.DisplayFor(model => model.Type)
+            </dd>
 
-        <dd>
-            @Html.DisplayFor(model => model.RegNumber)
-        </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.RegNumber)
+            </dt>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Color)
-        </dt>
+            <dd>
+                @Html.DisplayFor(model => model.RegNumber)
+            </dd>
 
-        <dd>
-            @Html.DisplayFor(model => model.Color)
-        </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.CheckinTime)
+            </dt>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Brand)
-        </dt>
+            <dd>
+                @Html.DisplayFor(model => model.CheckinTime)
+            </dd>
 
-        <dd>
-            @Html.DisplayFor(model => model.Brand)
-        </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.CheckoutTime)
+            </dt>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Model)
-        </dt>
+            <dd>
+                @Html.DisplayFor(model => model.CheckoutTime)
+            </dd>
 
-        <dd>
-            @Html.DisplayFor(model => model.Model)
-        </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.TotalTimeString)
+            </dt>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.NumberOfWheels)
-        </dt>
+            <dd>
+                @Html.DisplayFor(model => model.TotalTimeString)
+            </dd>
 
-        <dd>
-            @Html.DisplayFor(model => model.NumberOfWheels)
-        </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.Price)
+            </dt>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Timestamp)
-        </dt>
+            <dd>
+                @Html.DisplayFor(model => model.Price)
+            </dd>
 
-        <dd>
-            @Html.DisplayFor(model => model.Timestamp)
-        </dd>
-        
-        <dt>
-            @Html.DisplayNameFor(model => model.Cost)
-        </dt>
+            <dt>
+                @Html.DisplayNameFor(model => model.TotalPrice)
+            </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.Cost)
-        </dd>
+            <dd>
+                @Html.DisplayFor(model => model.TotalPrice)
+            </dd>
 
-    </dl>
+        </dl>
+    </div>
+    <div class="noprint">
+        <p>
+            <input type="button" value="Print receipt" class="btn btn-default" onclick="javascript: window.print();"/> |
+            @Html.ActionLink("Back to List", "Index")
+        </p>
+    </div>
 </div>
-<p>
-    @Html.ActionLink("Back to List", "Index")
-</p>

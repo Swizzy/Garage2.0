@@ -35,6 +35,7 @@ namespace Garage2._0.Migrations
                     Color = vehicleColor,
                     Type = vehicleType,
                     Timestamp = DateTime.Now - TimeSpan.FromMinutes(rand.Next(0, 1440)),
+                    CheckoutTime = DateTime.Now,
                     RegNumber = $"{vehicleColor} {vehicleType} #{list.Count(v => v.Type == vehicleType && v.Color == vehicleColor) + 1}"
                 });
             }

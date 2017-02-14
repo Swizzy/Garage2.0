@@ -25,22 +25,19 @@ namespace Garage2._0.Controllers
                 return RedirectToAction("Index", "Setup");
             IQueryable<Vehicle> vehicles = db.Vehicles;
 
-            ViewBag.selectedvehicletype = selectedvehicletype;
-
-            // Vehicle type
             if (!String.IsNullOrEmpty(selectedvehicletype))
             {
                 Vehicle.VehicleType resulttype;
                 if (Enum.TryParse(selectedvehicletype, out resulttype))
                 {
                     vehicles = vehicles.Where(v => v.Type == resulttype);
+                    ViewBag.selectedvehicletype = selectedvehicletype;
                 }
             }
 
             if (searchString != null)
             {
-                // If the search string is changed during paging, the page has to be reset to 1
-                page = 1;
+                page = 1; // If the search string is changed during paging, the page has to be reset to 1
             }
             else
             {
@@ -57,19 +54,30 @@ namespace Garage2._0.Controllers
                 case "type":
                     vehicles = vehicles.OrderBy(v => v.Type);
                     break;
+                case "type_dec":
+                    vehicles = vehicles.OrderByDescending(v => v.Type);
+                    break;
                 case "regnumber":
                     vehicles = vehicles.OrderBy(v => v.RegNumber);
+                    break;
+                case "regnumber_dec":
+                    vehicles = vehicles.OrderByDescending(v => v.RegNumber);
                     break;
                 case "color":
                     vehicles = vehicles.OrderBy(v => v.Color);
                     break;
-                case "checkintime":
-                    vehicles = vehicles.OrderBy(v => v.Timestamp);
+                case "color_dec":
+                    vehicles = vehicles.OrderByDescending(v => v.Color);
+                    break;
+                case "checkintime_dec":
+                    vehicles = vehicles.OrderByDescending(v => v.Timestamp);
                     break;
                 default:
-                    vehicles = vehicles.OrderBy(v => v.Id);
+                    vehicles = vehicles.OrderBy(v => v.Timestamp);
                     break;
             }
+            ViewBag.CurrentSort = orderBy;
+
             HasVacantSpots();
 
             return View(vehicles.ToPagedList(page, 10));
@@ -190,6 +198,7 @@ namespace Garage2._0.Controllers
             if (ModelState.IsValid)
             {
                 vehicle.Timestamp = DateTime.Now;
+                vehicle.CheckoutTime = DateTime.Now;//Test
 
                 var firstFreeUnit = FindFirstFreeUnit(vehicle.Units);
                 if (firstFreeUnit + vehicle.Units > db.GarageConfiguration.MaxUnits) {
@@ -218,7 +227,9 @@ namespace Garage2._0.Controllers
             {
                 return HttpNotFound();
             }
-            vehicle.Cost = Math.Round((decimal) (DateTime.Now - vehicle.Timestamp).TotalMinutes) * db.GarageConfiguration.PricePerMinute;
+            vehicle.CheckoutTime = DateTime.Now;
+            //vehicle.Cost = Math.Round((decimal) (DateTime.Now - vehicle.Timestamp).TotalMinutes) * db.GarageConfiguration.PricePerMinute;
+            vehicle.Cost = Math.Round((decimal)(vehicle.CheckoutTime - vehicle.Timestamp).TotalMinutes) * db.GarageConfiguration.PricePerMinute;
             db.Vehicles.AddOrUpdate(v => v.Id, vehicle);
             db.SaveChanges();
             return View(vehicle);
@@ -230,9 +241,16 @@ namespace Garage2._0.Controllers
         public ActionResult CheckoutConfirmed(int id)
         {
             Vehicle vehicle = db.Vehicles.Find(id);
+
+            var receiptViewModel = new ReceiptViewModel();
+
+            //receiptViewModel.Update(vehicle, DateTime.Now, db.GarageConfiguration.PricePerMinute);
+            receiptViewModel.Update(vehicle, db.GarageConfiguration.PricePerMinute);
+
             db.Vehicles.Remove(vehicle);
             db.SaveChanges();
-            return View("Receipt", vehicle);
+
+            return View("Receipt", receiptViewModel);;
         }
 
         private void AddVehicleSpot(int index, Vehicle vehicle, Overview[] spots)
