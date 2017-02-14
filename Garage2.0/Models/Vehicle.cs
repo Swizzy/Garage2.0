@@ -38,7 +38,7 @@ namespace Garage2._0.Models
         [DisplayFormat(DataFormatString = "{0:c}")]
         public decimal Cost { get; set; }
         [NotMapped]
-        [Display(Name = "Parking Spot")]
+        [Display(Name = "Parking Space")]
         public string ParkingSpot {
             get {
                 switch (Type) {
