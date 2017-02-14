@@ -69,6 +69,12 @@ namespace Garage2._0.Controllers
                 case "color_dec":
                     vehicles = vehicles.OrderByDescending(v => v.Color);
                     break;
+                case "spot":
+                    vehicles = vehicles.OrderBy(v => v.ParkingUnit);
+                    break;
+                case "spot_dec":
+                    vehicles = vehicles.OrderByDescending(v => v.ParkingUnit);
+                    break;
                 case "checkintime_dec":
                     vehicles = vehicles.OrderByDescending(v => v.Timestamp);
                     break;

@@ -43,6 +43,9 @@
         <th>
             @Html.ActionLink(Html.DisplayNameFor(model => first.Timestamp).ToString(), "Index", new { orderBy = ViewBag.CurrentSort == "checkintime" ? "checkintime_dec" : "checkintime", currentFilter = ViewBag.CurrentFilter })
         </th>
+        <th>
+            @Html.ActionLink(Html.DisplayNameFor(model => first.ParkingSpot).ToString(), "Index", new { orderBy = ViewBag.CurrentSort == "spot" ? "spot_dec" : "spot", currentFilter = ViewBag.CurrentFilter })
+        </th>
         <th></th>
     </tr>
 
@@ -59,6 +62,9 @@
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Timestamp)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ParkingSpot)
             </td>
             <td>
                 @Html.ActionLink("Details", "Details", new { id=item.Id }) |
