@@ -1,17 +1,19 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using Garage2._0.DAL;
 using Garage2._0.Models;
 
 namespace Garage2._0.ViewModels
 {
     public class Statistics
     {
-        public Statistics()
+        public Statistics(GarageContext ctx)
         {
             ColorStatistics = new Dictionary<Vehicle.VehicleColor, int>();
             TypeStatistics = new Dictionary<Vehicle.VehicleType, int>();
             TypeColorStatistics = new Dictionary<Vehicle.VehicleType, Dictionary<Vehicle.VehicleColor, int>>();
+            MaximumUnits = ctx.GarageConfiguration.MaxUnits;
         }
         [Display(Name = "Statistics by Vehicle Color")]
         public Dictionary<Vehicle.VehicleColor, int> ColorStatistics { get; set; }
@@ -26,12 +28,17 @@ namespace Garage2._0.ViewModels
         public decimal TotalCost { get; set; }
         [Display(Name = "Total Vehicles")]
         public int TotalVehicles { get; set; }
+        private long TotalUnitsUsed { get; set; }
+        private long MaximumUnits { get; }
+        [Display(Name = "Total Spots Used")]
+        public string TotalSpaceUsed => $"{TotalUnitsUsed / 3.0:F1} / {MaximumUnits / 3}";
 
         public void Update(Vehicle vehicle, DateTime now, decimal pricePerMinute)
         {
             TotalVehicles += 1;
             TotalWheels += vehicle.NumberOfWheels;
             TotalCost += (decimal)Math.Round((now - vehicle.Timestamp).TotalMinutes) * pricePerMinute;
+            TotalUnitsUsed += vehicle.Units;
 
             // Vehicle Color statistics
             if (!ColorStatistics.ContainsKey(vehicle.Color))
