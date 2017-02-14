@@ -1,5 +1,4 @@
-﻿@using Garage2._0.Models
-@model Garage2._0.ViewModels.ReceiptViewModel
+﻿@model Garage2._0.ViewModels.ReceiptViewModel
 
 @{
     ViewBag.Title = "Parking Receipt";
@@ -10,7 +9,7 @@
 
     <div>
         <h4>Vehicle</h4>
-        <hr />
+        <hr/>
         <dl class="dl-horizontal">
             <dt>
                 @Html.DisplayNameFor(model => model.Type):
@@ -59,7 +58,7 @@
             <dd>
                 @Html.DisplayFor(model => model.Price)
             </dd>
-           
+
             <dt>
                 @Html.DisplayNameFor(model => model.TotalPrice)
             </dt>
@@ -72,7 +71,8 @@
     </div>
     <div class="noprint">
         <p>
-            <input type="button" value="Print receipt" class="btn btn-default" onclick="javascript: window.print();" /> |
+            <input type="button" value="Print receipt" class="btn btn-default" onclick="javascript: window.print();"/> |
             @Html.ActionLink("Back to List", "Index")
         </p>
     </div>
+</div>
