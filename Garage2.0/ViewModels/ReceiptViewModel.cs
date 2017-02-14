@@ -10,17 +10,20 @@ namespace Garage2._0.ViewModels
 {
     public class ReceiptViewModel
     {
-        //[Display(Name = "Vehicle type:")]
+        [Display(Name = "Vehicle type")]
         public Vehicle.VehicleType Type { get; set; }
 
-        [Display(Name = "Registration number:")]
+        [Display(Name = "Registration")]
         public string RegNumber { get; set; }
 
-        [Display(Name = "Checkin time:")]
+        [Display(Name = "Parking space")]
+        public string ParkingSpot { get; set; }
+
+        [Display(Name = "Checkin time")]
         [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd HH:mm}")]
         public DateTime CheckinTime { get; set; }
 
-        [Display(Name = "Checkout time:")]
+        [Display(Name = "Checkout time")]
         [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd HH:mm}")]
         public DateTime CheckoutTime { get; set; }
 
@@ -28,14 +31,14 @@ namespace Garage2._0.ViewModels
         //[DisplayFormat(DataFormatString = "{0:dd\\:hh\\:mm}")]
         public TimeSpan TotalTime { get; set; }
 
-        [Display(Name = "Time period:")]
+        [Display(Name = "Time period")]
         public string TotalTimeString { get; set; }
 
-        [Display(Name = "Price per minute:")]
+        [Display(Name = "Price per minute")]
         [DisplayFormat(DataFormatString = "{0:c}")]
         public decimal Price { get; set; }
 
-        [Display(Name = "Total price:")]
+        [Display(Name = "Total price")]
         [DisplayFormat(DataFormatString = "{0:c}")]
         public decimal TotalPrice { get; set; }
 
@@ -44,6 +47,7 @@ namespace Garage2._0.ViewModels
         {
             Type = vehicle.Type;
             RegNumber = vehicle.RegNumber;
+            ParkingSpot = vehicle.ParkingSpot;
             CheckinTime = vehicle.Timestamp;
             CheckoutTime = vehicle.CheckoutTime;
 
