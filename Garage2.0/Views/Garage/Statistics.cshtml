@@ -13,67 +13,79 @@
     <li>@Html.DisplayNameFor(m => m.TotalWheels): @Html.DisplayFor(m => m.TotalWheels)</li>
 </ul>
 
-<h2>@Html.DisplayNameFor(m => m.TypeColorStatistics)</h2>
+<div class="container">
+    <div class="row">
+        <div class="col-sm-6">
+            <h2>@Html.DisplayNameFor(m => m.TypeStatistics)</h2>
 
-<table class="table table-striped StatsTable">
-    <tr>
-        <th>@Html.DisplayNameFor(t => new Vehicle().Type)</th>
-        <th>Count</th>
-    </tr>
-    @foreach (var item in Model.TypeStatistics)
-    {
-        <tr>
-            <td>@Html.DisplayFor(m => item.Key)</td>
-            <td>@Html.DisplayFor(m => item.Value)</td>
-        </tr>
-    }
-</table>
-
-<h2>@Html.DisplayNameFor(m => m.ColorStatistics)</h2>
-
-<table class="table table-striped StatsTable">
-    <tr>
-        <th>@Html.DisplayNameFor(t => new Vehicle().Color)</th>
-        <th>Count</th>
-    </tr>
-    @foreach (var item in Model.ColorStatistics)
-    {
-        <tr>
-            <td>@Html.DisplayFor(m => item.Key)</td>
-            <td>@Html.DisplayFor(m => item.Value)</td>
-        </tr>
-    }
-</table>
-
-<h2>@Html.DisplayNameFor(m => m.TypeColorStatistics)</h2>
-
-<table class="table table-striped StatsTable">
-    <tr>
-        <th>@Html.DisplayNameFor(t => new Vehicle().Type)</th>
-        @foreach (var color in Enum.GetNames(typeof(Vehicle.VehicleColor)))
-        {
-            <th>
-                @Html.DisplayFor(t => color)
-            </th>
-        }
-    </tr>
-    @foreach (var item in Model.TypeColorStatistics)
-    {
-        <tr>
-            <td>@Html.DisplayFor(m => item.Key)</td>
-            @foreach (Vehicle.VehicleColor color in Enum.GetValues(typeof(Vehicle.VehicleColor)))
+            <table class="table table-striped StatsTable">
+                <tr>
+                    <th>@Html.DisplayNameFor(t => new Vehicle().Type)</th>
+                    <th>Count</th>
+                </tr>
+                @foreach (var item in Model.TypeStatistics)
             {
-                if (item.Value.ContainsKey(color))
-                {
-                    <td>
-                        @Html.DisplayFor(t => item.Value[color])
-                    </td>
+                    <tr>
+                        <td>@Html.DisplayFor(m => item.Key)</td>
+                        <td>@Html.DisplayFor(m => item.Value)</td>
+                    </tr>
                 }
-                else
-                {
-                    <td></td>
+            </table>
+        </div>
+        <div class="col-sm-6">
+            <h2>@Html.DisplayNameFor(m => m.ColorStatistics)</h2>
+
+            <table class="table table-striped StatsTable">
+                <tr>
+                    <th>@Html.DisplayNameFor(t => new Vehicle().Color)</th>
+                    <th>Count</th>
+                </tr>
+                @foreach (var item in Model.ColorStatistics)
+            {
+                    <tr>
+                        <td>@Html.DisplayFor(m => item.Key)</td>
+                        <td>@Html.DisplayFor(m => item.Value)</td>
+                    </tr>
                 }
-            }
-        </tr>
-    }
-</table>
+            </table>
+        </div>
+    </div>
+</div>
+<div class="container">
+    <div class="row">
+        <div class="class="col-sm-12">
+            <h2>@Html.DisplayNameFor(m => m.TypeColorStatistics)</h2>
+
+            <table class="table table-striped StatsTable">
+                <tr>
+                    <th>@Html.DisplayNameFor(t => new Vehicle().Type)</th>
+                    @foreach (var color in Enum.GetNames(typeof(Vehicle.VehicleColor)))
+            {
+                        <th>
+                            @Html.DisplayFor(t => color)
+                        </th>
+                    }
+                </tr>
+                @foreach (var item in Model.TypeColorStatistics)
+            {
+                    <tr>
+                        <td>@Html.DisplayFor(m => item.Key)</td>
+                        @foreach (Vehicle.VehicleColor color in Enum.GetValues(typeof(Vehicle.VehicleColor)))
+                {
+                    if (item.Value.ContainsKey(color))
+                    {
+                                <td>
+                                    @Html.DisplayFor(t => item.Value[color])
+                                </td>
+                            }
+                            else
+                            {
+                                <td></td>
+                            }
+                        }
+                    </tr>
+                }
+            </table>
+        </div>
+    </div>
+</div>
